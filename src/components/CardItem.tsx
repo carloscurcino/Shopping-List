@@ -16,10 +16,12 @@ export interface CardItemProps {
     },
     description: string,
     price: number,
+    quantity?: number;
 }
 
 interface CardItemComponentProps {
     item: CardItemProps;
+    // quantity?: number;
     isSelected?: boolean;
     onAddPress: () => void;
     onRemovePress: () => void;
@@ -38,7 +40,10 @@ const CardItem: React.FC<CardItemComponentProps> = ({ item, isSelected, onAddPre
                 )}
             </View>
             <View style={{ flex: 1 }}>
-                <Text>{item.name}</Text>
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={{ marginRight: 40 }}>{item.name}</Text>
+                    {item.quantity && <Text>Quantidade: {item.quantity}</Text>}
+                </View>
                 <Text>{item.description}</Text>
             </View>
 

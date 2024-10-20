@@ -33,6 +33,44 @@ export default function Home() {
         setSearchText(null)
     }
 
+    const handleAddItem = (item: CardItemProps) => {
+        setSelectedItems((prevItems) => {
+            const itemExists = prevItems.find((selectedItem) => selectedItem.id === item.id);
+
+            if (itemExists) {
+                return prevItems.map((selectedItem) =>
+                    selectedItem.id === item.id
+                        ? { ...selectedItem, quantity: (selectedItem.quantity || 0) + 1 }
+                        : selectedItem
+                );
+            } else {
+                return [...prevItems, { ...item, quantity: 1 }];
+            }
+        });
+        ToastAndroid.show('Adicionado com sucesso!', ToastAndroid.SHORT);
+    };
+
+    const handleRemoveItem = (item: CardItemProps) => {
+        setSelectedItems((prevItems) => {
+            const itemExists = prevItems.find((selectedItem) => selectedItem.id === item.id);
+
+            if (itemExists) {
+                if (itemExists.quantity && itemExists.quantity > 1) {
+                    return prevItems.map((selectedItem) =>
+                        selectedItem.id === item.id
+                            ? { ...selectedItem, quantity: selectedItem.quantity! - 1 }
+                            : selectedItem
+                    );
+                } else {
+                    return prevItems.filter((selectedItem) => selectedItem.id !== item.id);
+                }
+            }
+            return prevItems; // Retorna a lista sem alterações caso o item não exista
+        });
+        ToastAndroid.show('Removido com sucesso!', ToastAndroid.SHORT);
+    };
+
+
     return (
         <View style={{ height: "100%", paddingHorizontal: 10, paddingVertical: 20 }}>
             <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "bold", marginBottom: 14 }}>Shopping List</Text>
@@ -57,10 +95,7 @@ export default function Home() {
                                     isSelected
                                     onAddPress={() => console.log("adicionado")}
                                     onRemovePress={() => {
-                                        setSelectedItems(prevItems =>
-                                            prevItems.filter(selectedItem => selectedItem.id !== item.id) // Remove the item
-                                        );
-                                        ToastAndroid.show('Removido com sucesso!', ToastAndroid.SHORT);
+                                        handleRemoveItem(item);
                                     }} />
                             }
                             ListEmptyComponent={
@@ -99,8 +134,7 @@ export default function Home() {
                                 <CardItem
                                     item={item}
                                     onAddPress={() => {
-                                        !selectedItems.find((selectedItem => selectedItem.id === item.id)) && setSelectedItems(prevItems => [...prevItems, item])
-                                        ToastAndroid.show('Adicionado com sucesso!', ToastAndroid.SHORT);
+                                        handleAddItem(item);
                                     }}
                                     onRemovePress={() => console.log("removido")} />
                             }
