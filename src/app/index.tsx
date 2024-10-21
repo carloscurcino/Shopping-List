@@ -1,12 +1,9 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList, ToastAndroid } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CardItem, { CardItemProps } from '@/components/CardItem'
-import { Picker } from '@react-native-picker/picker';
 import { shopping_data } from '@/utils/data';
-import { useNavigation } from 'expo-router';
 
 export default function Home() {
-    const navigation = useNavigation()
     const [selectedItems, setSelectedItems] = useState<CardItemProps[]>([])
 
     const [selectedTab, setSelectedTab] = useState<string>("list")
