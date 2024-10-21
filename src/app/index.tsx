@@ -76,7 +76,7 @@ export default function Home() {
             <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "bold", marginBottom: 14 }}>Shopping List</Text>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 {TAB_CONFIG.map(tab => (
-                    <TouchableOpacity onPress={() => handleChangeTab(tab.value)}>
+                    <TouchableOpacity key={tab.value} onPress={() => handleChangeTab(tab.value)}>
                         <Text style={{ fontSize: selectedTab === tab.value ? 18 : 12, color: "#000", borderBottomWidth: selectedTab === tab.value ? 1 : 0, borderBottomColor: "#058EFF" }}>{tab.label}</Text>
                     </TouchableOpacity>
                 ))}
@@ -139,10 +139,6 @@ export default function Home() {
                                     onRemovePress={() => console.log("removido")} />
                             }
                         />
-
-                        {/* {shopping_data.map(item => (
-                            <CardItem item={item} />
-                        ))} */}
                     </View>
                 )}
 
