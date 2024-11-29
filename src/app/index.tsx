@@ -124,7 +124,7 @@ export default function Home() {
 
                         <FlatList
                             data={shopping_data.filter(item =>
-                                searchText ? item.name.toLowerCase().includes(searchText.toLowerCase()) : true // Only filter when searchText is provided
+                                searchText ? item.name.toLowerCase().includes(searchText.toLowerCase()) : true
                             )}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) =>
